@@ -85,6 +85,7 @@ public class AjaxController {
         System.out.println("ajaxDTO = " + ajaxDTO);
         List<AjaxDTO> dtoList = DTOList();
         dtoList.add(ajaxDTO);
-        return new ResponseEntity<>(ajaxDTO, HttpStatus.OK);
+//        return new ResponseEntity<>(ajaxDTO, HttpStatus.OK);
+        return ResponseEntity.ok(ajaxDTO);
     }
 }
