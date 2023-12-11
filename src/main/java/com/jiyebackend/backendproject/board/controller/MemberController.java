@@ -1,15 +1,26 @@
 package com.jiyebackend.backendproject.board.controller;
 
+import com.jiyebackend.backendproject.board.dto.MemberDTO;
+import com.jiyebackend.backendproject.board.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
-    @GetMapping("/save")
+    private final MemberService memberService;
+
+    @GetMapping("/join")
     public String saveForm() {
-        return "member-save";
+        return "join";
     }
 
+    @PostMapping("/join")
+    public String save(@ModelAttribute MemberDTO memberDTO) {
+        System.out.println("memberDTO = " + memberDTO);
+        memberService.join(memberDTO);
+        return "index";
+    }
 }
