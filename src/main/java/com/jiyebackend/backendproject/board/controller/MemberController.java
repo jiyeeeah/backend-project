@@ -2,6 +2,7 @@ package com.jiyebackend.backendproject.board.controller;
 
 import com.jiyebackend.backendproject.board.dto.MemberDTO;
 import com.jiyebackend.backendproject.board.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,25 @@ public class MemberController {
     public String save(@ModelAttribute MemberDTO memberDTO) {
         System.out.println("memberDTO = " + memberDTO);
         memberService.join(memberDTO);
-        return "index";
+        return "login";
+    }
+
+    @GetMapping("/login")
+    public String loginForm() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+        MemberDTO loginResult = memberService.login(memberDTO);
+        if(loginResult != null) {
+            // login 성공
+            session.setAttribute("loginEmail", loginResult.getMemberEmail());
+            return "main";
+        } else {
+            // login 실패
+            return "login";
+        }
+
     }
 }
