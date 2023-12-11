@@ -5,7 +5,10 @@ import com.jiyebackend.backendproject.board.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,6 +44,13 @@ public class MemberController {
             // login 실패
             return "login";
         }
+    }
 
+    @GetMapping("/")
+    public String findAll(Model model) {
+        List<MemberDTO> memberDTOList = memberService.findAll();
+        // 어떠한 html로 가져갈 데이터가 있다면 model사용
+        model.addAttribute("memberList", memberDTOList);
+        return "memberList";
     }
 }
